@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
+from PIL import Image, ImageTk
 from dbhelper import DBhelper
 
 class FlipkartGUI:
@@ -7,38 +9,49 @@ class FlipkartGUI:
         self.db = DBhelper()
         self.root = root
         self.root.title("Flipkart Registration and Login")
+        self.root.geometry("800x600")
+        
+        # Load background image
+        self.background_image = Image.open("register.jpg")
+        self.background_photo = ImageTk.PhotoImage(self.background_image)
+
+        # Create canvas to display background image
+        self.canvas = tk.Canvas(self.root, width=800, height=600)
+        self.canvas.pack(fill="both", expand=True)
+        self.canvas.create_image(0, 0, image=self.background_photo, anchor="nw")
+
         self.create_widgets()
 
     def create_widgets(self):
-        self.frame = tk.Frame(self.root)
-        self.frame.pack()
+        self.frame = tk.Frame(self.root, bg="lightgray", bd=5)
+        self.frame.place(relx=0.5, rely=0.5, anchor="center")
 
-        self.label_title = tk.Label(self.frame, text="Flipkart", font=("Arial", 20))
-        self.label_title.grid(row=0, column=0, columnspan=2, pady=10)
+        self.label_title = tk.Label(self.frame, text="Flipkart", font=("Arial", 24, "bold"), bg="lightgray")
+        self.label_title.grid(row=0, column=0, columnspan=2, pady=10, padx=20)
 
-        self.label_name = tk.Label(self.frame, text="Name:")
-        self.label_name.grid(row=1, column=0, pady=5)
+        self.label_name = tk.Label(self.frame, text="Name:", font=("Arial", 14), bg="lightgray")
+        self.label_name.grid(row=1, column=0, pady=5, padx=10, sticky="e")
 
-        self.entry_name = tk.Entry(self.frame)
-        self.entry_name.grid(row=1, column=1, pady=5)
+        self.entry_name = ttk.Entry(self.frame, font=("Arial", 14))
+        self.entry_name.grid(row=1, column=1, pady=5, padx=10)
 
-        self.label_email = tk.Label(self.frame, text="Email:")
-        self.label_email.grid(row=2, column=0, pady=5)
+        self.label_email = tk.Label(self.frame, text="Email:", font=("Arial", 14), bg="lightgray")
+        self.label_email.grid(row=2, column=0, pady=5, padx=10, sticky="e")
 
-        self.entry_email = tk.Entry(self.frame)
-        self.entry_email.grid(row=2, column=1, pady=5)
+        self.entry_email = ttk.Entry(self.frame, font=("Arial", 14))
+        self.entry_email.grid(row=2, column=1, pady=5, padx=10)
 
-        self.label_password = tk.Label(self.frame, text="Password:")
-        self.label_password.grid(row=3, column=0, pady=5)
+        self.label_password = tk.Label(self.frame, text="Password:", font=("Arial", 14), bg="lightgray")
+        self.label_password.grid(row=3, column=0, pady=5, padx=10, sticky="e")
 
-        self.entry_password = tk.Entry(self.frame, show='*')
-        self.entry_password.grid(row=3, column=1, pady=5)
+        self.entry_password = ttk.Entry(self.frame, show='*', font=("Arial", 14))
+        self.entry_password.grid(row=3, column=1, pady=5, padx=10)
 
-        self.button_register = tk.Button(self.frame, text="Register", command=self.register)
-        self.button_register.grid(row=4, column=0, pady=10)
+        self.button_register = tk.Button(self.frame, text="Register", font=("Arial", 14), command=self.register)
+        self.button_register.grid(row=4, column=0, pady=10, padx=10, sticky="e")
 
-        self.button_login = tk.Button(self.frame, text="Login", command=self.login)
-        self.button_login.grid(row=4, column=1, pady=10)
+        self.button_login = tk.Button(self.frame, text="Login", font=("Arial", 14), command=self.login)
+        self.button_login.grid(row=4, column=1, pady=10, padx=10, sticky="w")
 
     def register(self):
         name = self.entry_name.get()
@@ -71,6 +84,7 @@ class FlipkartGUI:
     def show_login_menu(self):
         self.login_menu_window = tk.Toplevel(self.root)
         self.login_menu_window.title("Login Menu")
+        self.login_menu_window.geometry("400x300")
 
         self.label_menu = tk.Label(self.login_menu_window, text="Login Menu", font=("Arial", 20))
         self.label_menu.pack(pady=10)
